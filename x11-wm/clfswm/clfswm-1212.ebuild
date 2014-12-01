@@ -20,21 +20,6 @@ RDEPEND="dev-lisp/clisp"
 
 S=${WORKDIR}/${MY_P}
 
-src_prepare() {
-	epatch "${FILESDIR}"/${MY_P}-configure.patch
-	epatch "${FILESDIR}"/${MY_P}-makefile.patch
-}
-
-src_configure() {
-	./configure --prefix "${EPREFIX}"/usr \
-		--libdir $(get_libdir) \
-		--with-lisp clisp \
-		--with-clfswm "${EPREFIX}"/usr/$(get_libdir)/${PN} \
-		--with-asdf "${EPREFIX}"/usr/$(get_libdir)/${PN}/contrib \
-		--lisp-bin "${EPREFIX}"/usr/bin/clisp \
-		--lisp-opt "-K full" || die
-}
-
 src_install() {
 	emake DESTDIR="${ED}"/usr install
 	dodoc README ChangeLog
